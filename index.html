@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Library</title>
+	<link rel="stylesheet" href="./css/normalize.min.css">
+	<link rel="stylesheet" href="./css/styles.min.css">
+</head>
+<body class="container">
+	<header class="header">
+		<div class="header-top">
+			<h1 class="header-title">Library</h1>
+			<div class="header-form">
+				<form action="#">
+					<label class="search-book--label" for="">
+						<input type="text" class="search-book" id="search-book" placeholder="Buscar libro...">
+					</label>
+				</form>		
+			</div>
+		</div>
+		<nav class="header-navbar">
+			<ul class="navbar-menu">
+				<li class="navbar-menu--option"><a onclick="bookSearchCategory('animals')" class="navbar-menu--option-link" href="#">Animales</a></li>
+				<li class="navbar-menu--option"><a onclick="bookSearchCategory('school')" class="navbar-menu--option-link" href="#">Escolares</a></li>
+				<li class="navbar-menu--option"><a onclick="bookSearchCategory('fiction')" class="navbar-menu--option-link" href="#">Ciencia ficción</a></li>
+				<li class="navbar-menu--option"><a onclick="bookSearchCategory('fantasy')" class="navbar-menu--option-link" href="#">Fantasía</a></li>
+				<li class="navbar-menu--option"><a onclick="bookSearchCategory('mystery')" class="navbar-menu--option-link" href="#">Misterio</a></li>
+				<li class="navbar-menu--option"><a onclick="bookSearchCategory('love')" class="navbar-menu--option-link" href="#">Romance</a></li>
+				<li class="navbar-menu--option"><a onclick="bookSearchCategory('suspense')" class="navbar-menu--option-link" href="#">Suspenso</a></li>
+			</ul>				
+		</nav>
+	</header>
+	<main class="content">
+		<div class="container-books" id="container-books"></div>
+	</main>
+	<footer class="footer">Libreria San Jose ® Todos los derechos reservados</footer>
+	<script src="./js/scripts.min.js"></script>
+</body>
+</html>
