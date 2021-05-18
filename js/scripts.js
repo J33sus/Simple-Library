@@ -1,5 +1,6 @@
 let searchBook = document.getElementById('search-book');
 let bookContainer = document.getElementById('container-books');
+let loadingBooks = document.getElementById('modal-loading-books');
 
 function addBook(book) {
 	// Main container
@@ -58,28 +59,32 @@ function addBook(book) {
 	bookContainer.appendChild(myBook);
 }
 
-function bookSearch(name) {
+function bookProccessCallback(data) {
+	// Hide modal
+	loadingBooks.style.display = '';
+
+	if(!data.items) alert('Sin resultados');
+	else for (const book of data.items) addBook(book);
+}
+
+function bookSearchName(name) {
+	// Remove old books and show modal
+	bookContainer.innerHTML = '';
+	loadingBooks.style.display = 'block';
+
 	// Find book name
 	fetch(`https://www.googleapis.com/books/v1/volumes?q=${name.replace(' ', '+')}&langRestrict=es&projection=lite&maxResults=15`)
-	.then(response => response.json()).then(data => {	
-		// Remove old books
-		bookContainer.innerHTML = "";
-
-		if(!data.items) alert('Sin resultados');
-		else for (const book of data.items) addBook(book);
-	});
+	.then(response => response.json()).then(data => bookProccessCallback(data));
 }
 
 function bookSearchCategory(category) {
+	// Remove old books and show modal
+	bookContainer.innerHTML = '';
+	loadingBooks.style.display = 'block';
+
 	// Find book category
 	fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${category.replace(' ', '+')}&langRestrict=es&maxResults=15`)
-	.then(response => response.json()).then(data => {	
-		// Remove old books
-		bookContainer.innerHTML = "";
-
-		if(!data.items) alert('Sin resultados');
-		else for (const book of data.items) addBook(book);
-	});
+	.then(response => response.json()).then(data => bookProccessCallback(data));
 }
 
 searchBook.addEventListener('keydown', function(event) {
@@ -88,6 +93,6 @@ searchBook.addEventListener('keydown', function(event) {
 	var key = event.key || event.keyCode;
 	if(key === 'Enter' || key === 13 && searchBook.value.length >= 1) {
 		event.preventDefault();
-		bookSearch(searchBook.value);
+		bookSearchName(searchBook.value);
 	}
 });
