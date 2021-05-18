@@ -48,7 +48,8 @@
 }
 
 .navbar-menu--option {
-	padding: 8px 16px;
+	cursor: pointer;
+	padding: 8px 24px;
 	text-transform: capitalize;
 	color: #fff;
 	text-align: center;
@@ -56,19 +57,9 @@
 	font-family: 'Roboto', sans-serif;
 }
 
-.navbar-menu--option-link {
-	padding: 8px 16px;
-	text-decoration: none;
-}
-
 .navbar-menu--option:hover {
 	background: rgb(172, 95, 95);
 }
-  
-.navbar-menu--option-link:active, .navbar-menu--option-link:visited {
-	color: #fff;
-}
-
 
 .search-book--label {
 	position: relative;
