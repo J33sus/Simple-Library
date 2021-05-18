@@ -48,7 +48,6 @@
 }
 
 .navbar-menu--option {
-	cursor: pointer;
 	padding: 8px 24px;
 	text-transform: capitalize;
 	color: #fff;
@@ -58,6 +57,7 @@
 }
 
 .navbar-menu--option:hover {
+	cursor: pointer;
 	background: rgb(172, 95, 95);
 }
 
