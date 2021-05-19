@@ -1,6 +1,23 @@
+// Get elements
 let searchBook = document.getElementById('l_search-book');
 let bookContainer = document.getElementById('container-books');
 let loadingBooks = document.getElementById('modal-loading-books');
+
+// My lang info
+let langInfo = {
+	'es': {
+		'title': 'Libreria',
+		'animals': 'Animales',
+		'fiction': 'Ciencia Ficción',
+		'fantasy': 'Fantasía',
+		'mystery': 'Misterio',
+		'love': 'Romance',
+		'suspense': 'Suspenso',
+		'search-book': 'Buscar libro...',
+		'obtain_books': 'obteniendo lista de libros',
+		'footer': 'Libreria ® 2021'
+	}
+}, langActual_page = 'en';
 
 function addBook(book) {
 	// Main container
@@ -73,7 +90,7 @@ function bookSearchName(name) {
 	loadingBooks.style.display = 'block';
 
 	// Find book name
-	fetch(`https://www.googleapis.com/books/v1/volumes?q=${name.replace(' ', '+')}&langRestrict=${getPageLanguage()}&projection=lite&maxResults=15`)
+	fetch(`https://www.googleapis.com/books/v1/volumes?q=${name.replace(' ', '+')}&langRestrict=${langActual_page}&projection=lite&maxResults=15`)
 	.then(response => response.json()).then(data => bookProccessCallback(data));
 }
 
@@ -84,10 +101,11 @@ function bookSearchCategory(category) {
 
 	// Find book category
 	console.log(category.id.substr(2, category.length))
-	fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${category.id.substr(2, category.length)}&langRestrict=${getPageLanguage()}&maxResults=15`)
+	fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${category.id.substr(2, category.length)}&langRestrict=${langActual_page}&maxResults=15`)
 	.then(response => response.json()).then(data => bookProccessCallback(data));
 }
 
+// Search book input
 searchBook.addEventListener('keydown', function(event) {
 	if (event.defaultPrevented) return;
 
@@ -98,58 +116,50 @@ searchBook.addEventListener('keydown', function(event) {
 	}
 });
 
-let langInfo = {
-	'es': {
-		'title': 'Libreria',
-		'animals': 'Animales',
-		'fiction': 'Ciencia Ficción',
-		'fantasy': 'Fantasía',
-		'mystery': 'Misterio',
-		'love': 'Romance',
-		'suspense': 'Suspenso',
-		'search-book': 'Buscar libro...',
-		'obtain_books': 'obteniendo lista de libros',
-		'footer': 'Libreria ® 2021'
-	}
-};
-
 function setPageLanguage(lang) {
-	let isAvailable = langInfo[lang];
+	// Is saved my default page lang?
+	if(langInfo[langActual_page] != lang) {
+		// Is available?
+		if(langInfo[langActual_page] == undefined) {
+			langInfo[langActual_page] = {};
 
-	if(isAvailable == undefined) {
-		langInfo[lang] = {};
-		for(const prop  in langInfo['es']) {
-			if(prop == 'search-book') {
-				langInfo[lang][prop] = document.getElementById(`l_${prop}`).placeholder;
+			// Obtain main lenguage from page
+			for(const prop  in langInfo['es']) {
+				let elem = document.getElementById(`l_${prop}`);
+
+				if(prop == 'search-book') langInfo[langActual_page][prop] = elem.placeholder;
+				else langInfo[langActual_page][prop] = elem.innerText;
 			}
-			else langInfo[lang][prop] = document.getElementById(`l_${prop}`).innerText;
 		}
+		// Update page
+		for(const prop  in langInfo[lang]) {
+			let elem = document.getElementById(`l_${prop}`);
+
+			if(prop == 'search-book') elem.placeholder = langInfo[lang][prop];
+			else elem.innerText = langInfo[lang][prop];
+		}
+
+		// Hide all flags
+		for(const prop  in langInfo) {
+			document.getElementById(`header-language-${prop}`).style.display = 'none';
+		}
+
+		// Set new lang
+		langActual_page = lang;
+		localStorage.setItem('language', lang);
+		document.getElementById(`header-language-${lang}`).style.display = 'block';
 	}
-
-	for(const prop  in langInfo[lang]) {
-		let elem = document.getElementById(`l_${prop}`);
-
-		if(prop == 'search-book') {
-			elem.placeholder = langInfo[lang][prop];
-		}
-		else elem.innerText = langInfo[lang][prop];
-	}	
-	localStorage.setItem('language', lang);
-	document.getElementById(`header-language-en`).style.display = 'none';
-	document.getElementById(`header-language-es`).style.display = 'none';
-	document.getElementById(`header-language-${lang}`).style.display = 'block';
-}
-
-function getPageLanguage() {
-	return localStorage.getItem('language');
 }
 
 window.addEventListener('load', function(event) {
+	// Add event on click
 	document.getElementById('header-language-en').addEventListener('click', () => {
 		setPageLanguage('es');
 	});
 	document.getElementById('header-language-es').addEventListener('click', () => {
 		setPageLanguage('en');
 	});
-	setPageLanguage(getPageLanguage() == undefined ? 'en' : getPageLanguage());
+
+	// Update page lang
+	setPageLanguage(localStorage.getItem('language'));
 });

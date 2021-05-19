@@ -1,6 +1,12 @@
+/**
+*
+* styles.css
+*
+**/
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 
+/*----------  Main container  ----------*/
 .container {
 	display: grid;
 	width: 100vw;
@@ -12,6 +18,7 @@
 	grid-template-rows: .1fr 1fr .1fr;
 }
 
+/*----------  Header sections  ----------*/
 .header {
 	grid-area: header;
 	background: rgb(192, 113, 113);
@@ -56,6 +63,7 @@
 	cursor: pointer;
 }
 
+/*----------  Menu categories  ----------*/
 .navbar-menu {
 	display: flex;
 	justify-content: center;
@@ -78,6 +86,7 @@
 	background: rgb(172, 95, 95);
 }
 
+/*----------  Search Input  ----------*/
 .search-book--label {
 	position: relative;
 }
@@ -102,6 +111,7 @@
 	outline: 0;
 }
 
+/*----------  Books  ----------*/
 .content {
     background: url("../images/background.jpg");
 	margin: 4px;
@@ -124,7 +134,8 @@
 .container-books::-webkit-scrollbar-thumb {
 	background:rgb(160, 87, 87);
 }
-	
+
+/*----------  Book Item  ----------*/
 .book {
 	background: #fff;
 	min-height: 200px;
@@ -181,6 +192,7 @@
 	background: rgb(160, 87, 87);
 }
 
+/*----------  Footer ----------*/
 .footer {
 	display: flex;
 	justify-content: center;
@@ -191,6 +203,7 @@
 	background: rgb(172, 95, 95);
 }
 
+/*----------  Loading Modal  ----------*/
 .modal {
 	display: none;
 	position: fixed;
