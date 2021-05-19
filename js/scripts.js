@@ -1,4 +1,4 @@
-let searchBook = document.getElementById('search-book');
+let searchBook = document.getElementById('l_search-book');
 let bookContainer = document.getElementById('container-books');
 let loadingBooks = document.getElementById('modal-loading-books');
 
@@ -73,7 +73,7 @@ function bookSearchName(name) {
 	loadingBooks.style.display = 'block';
 
 	// Find book name
-	fetch(`https://www.googleapis.com/books/v1/volumes?q=${name.replace(' ', '+')}&langRestrict=es&projection=lite&maxResults=15`)
+	fetch(`https://www.googleapis.com/books/v1/volumes?q=${name.replace(' ', '+')}&langRestrict=${getPageLanguage()}&projection=lite&maxResults=15`)
 	.then(response => response.json()).then(data => bookProccessCallback(data));
 }
 
@@ -83,7 +83,8 @@ function bookSearchCategory(category) {
 	loadingBooks.style.display = 'block';
 
 	// Find book category
-	fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${category.replace(' ', '+')}&langRestrict=es&maxResults=15`)
+	console.log(category.id.substr(2, category.length))
+	fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${category.id.substr(2, category.length)}&langRestrict=${getPageLanguage()}&maxResults=15`)
 	.then(response => response.json()).then(data => bookProccessCallback(data));
 }
 
@@ -95,4 +96,61 @@ searchBook.addEventListener('keydown', function(event) {
 		event.preventDefault();
 		bookSearchName(searchBook.value);
 	}
+});
+
+let langInfo = {
+	'es': {
+		'title': 'Libreria',
+		'animals': 'Animales',
+		'fiction': 'Ciencia Ficción',
+		'fantasy': 'Fantasía',
+		'mystery': 'Misterio',
+		'love': 'Romance',
+		'suspense': 'Suspenso',
+		'search-book': 'Buscar libro...',
+		'obtain_books': 'obteniendo lista de libros',
+		'footer': 'Libreria ® 2021'
+	}
+};
+
+function setPageLanguage(lang) {
+	let isAvailable = langInfo[lang];
+
+	if(isAvailable == undefined) {
+		langInfo[lang] = {};
+		for(const prop  in langInfo['es']) {
+			if(prop == 'search-book') {
+				langInfo[lang][prop] = document.getElementById(`l_${prop}`).placeholder;
+			}
+			else langInfo[lang][prop] = document.getElementById(`l_${prop}`).innerText;
+		}
+	} else {
+		for(const prop  in langInfo[lang]) {
+			let elem = document.getElementById(`l_${prop}`);
+
+			if(prop == 'search-book') {
+				elem.placeholder = langInfo[lang][prop];
+			}
+			else elem.innerText = langInfo[lang][prop];
+		}	
+	}
+
+	localStorage.setItem('language', lang);
+	document.getElementById(`header-language-en`).style.display = 'none';
+	document.getElementById(`header-language-es`).style.display = 'none';
+	document.getElementById(`header-language-${lang}`).style.display = 'block';
+}
+
+function getPageLanguage() {
+	return localStorage.getItem('language');
+}
+
+window.addEventListener('load', function(event) {
+	document.getElementById('header-language-en').addEventListener('click', () => {
+		setPageLanguage('es');
+	});
+	document.getElementById('header-language-es').addEventListener('click', () => {
+		setPageLanguage('en');
+	});
+	setPageLanguage(getPageLanguage() == undefined ? 'en' : getPageLanguage());
 });
