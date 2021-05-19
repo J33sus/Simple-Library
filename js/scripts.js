@@ -100,7 +100,6 @@ function bookSearchCategory(category) {
 	loadingBooks.style.display = 'block';
 
 	// Find book category
-	console.log(category.id.substr(2, category.length))
 	fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${category.id.substr(2, category.length)}&langRestrict=${langActual_page}&maxResults=15`)
 	.then(response => response.json()).then(data => bookProccessCallback(data));
 }
