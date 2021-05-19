@@ -124,17 +124,16 @@ function setPageLanguage(lang) {
 			}
 			else langInfo[lang][prop] = document.getElementById(`l_${prop}`).innerText;
 		}
-	} else {
-		for(const prop  in langInfo[lang]) {
-			let elem = document.getElementById(`l_${prop}`);
-
-			if(prop == 'search-book') {
-				elem.placeholder = langInfo[lang][prop];
-			}
-			else elem.innerText = langInfo[lang][prop];
-		}	
 	}
 
+	for(const prop  in langInfo[lang]) {
+		let elem = document.getElementById(`l_${prop}`);
+
+		if(prop == 'search-book') {
+			elem.placeholder = langInfo[lang][prop];
+		}
+		else elem.innerText = langInfo[lang][prop];
+	}	
 	localStorage.setItem('language', lang);
 	document.getElementById(`header-language-en`).style.display = 'none';
 	document.getElementById(`header-language-es`).style.display = 'none';
