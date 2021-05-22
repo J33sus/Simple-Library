@@ -266,11 +266,10 @@
 		margin: 12px 0px 12px 0px;
 	}
 
-	
 	/*----------  Header right (search box and language)  ----------*/
 	.header-right {
 		margin-bottom: 10px;
-		justify-content: center;
+		justify-content: space-evenly;
 	}
 
 	.header-languages {
@@ -282,12 +281,8 @@
 		height: 35px;
 	}
 
-	.search-book {
-		width: 80%;
-	}
-
 	.search-form {
-		width: 90%;
+		width: 80%;
 	}
 
 	/*----------  Menu Arrow (Responsive)  ----------*/	
