@@ -39,7 +39,7 @@
 	display: flex;
 }
 
-.header-form {
+.header-right {
 	width: 100%;
 	margin-right: 15px;
 	display: flex;
@@ -48,6 +48,7 @@
 }
 
 .header-languages {
+	height: 95%;
 	width: 10%;
 	display: flex;
 	align-items: center;
@@ -57,7 +58,6 @@
 .header-languages svg {
 	width: 35%;
 	height: 35%;
-	display: flex;
 }
 
 .header-languages svg:hover {
@@ -122,10 +122,15 @@
 	padding: 10px 40px;
     border: none;
 	box-shadow: none;
+	width: -webkit-fill-available;
 }
 
 .search-book:focus {
 	outline: 0;
+}
+
+.search-form {
+	width: 25%;
 }
 
 /*----------  Books  ----------*/
@@ -261,15 +266,30 @@
 		margin: 12px 0px 12px 0px;
 	}
 
-	.header-languages {
-		display: none;
-	}
-
-	.header-form {
+	
+	/*----------  Header right (search box and language)  ----------*/
+	.header-right {
 		margin-bottom: 10px;
 		justify-content: center;
 	}
-	
+
+	.header-languages {
+		display: block;
+	}
+
+	.header-languages svg {
+		width: 90%;
+		height: 35px;
+	}
+
+	.search-book {
+		width: 80%;
+	}
+
+	.search-form {
+		width: 90%;
+	}
+
 	/*----------  Menu Arrow (Responsive)  ----------*/	
 	#menu-arrow { 
 		display: block;
@@ -299,15 +319,6 @@
 		display: block;
 	}
 	
-	/*----------  Search Book  ----------*/	
-	.search-book {
-		width: -webkit-fill-available;
-	}
-
-	.search-form {
-		width: 95%;		
-	}
-
 	/*----------  Book Item  ----------*/
 	.book {
 		margin: 0px 5px 5px 5px;

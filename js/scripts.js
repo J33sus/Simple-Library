@@ -113,18 +113,11 @@ function toggleMenu() {
 	let menuContainer = document.getElementsByClassName('navbar-menu')[0];
 	let menuOptions = document.getElementsByClassName('navbar-menu--option');
 
-	if(menuArrow.innerHTML == '↑') { 		// Hide
-		menuArrow.innerHTML = '↓';
-		menuContainer.className = 'navbar-menu';
-
-		for(let option of menuOptions) option.className = 'navbar-menu--option';
-	}
-	else if(menuArrow.innerHTML == '↓') {	// Show
-		menuArrow.innerHTML = '↑';
-		menuContainer.className = 'navbar-menu navbar-menu--enable';
-
-		for(let option of menuOptions) option.className = 'navbar-menu--option navbar-menu--option-enable';
-	}
+	if(menuArrow.innerHTML == '↑') menuArrow.innerHTML = '↓';
+	else if(menuArrow.innerHTML == '↓') menuArrow.innerHTML = '↑';
+	//
+	menuContainer.classList.toggle('navbar-menu--enable');
+	for(let option of menuOptions) option.classList.toggle('navbar-menu--option-enable');
 }
 
 // Search book input
