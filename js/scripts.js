@@ -2,6 +2,7 @@
 let searchBook = document.getElementById('l_search-book');
 let bookContainer = document.getElementById('container-books');
 let loadingBooks = document.getElementById('modal-loading-books');
+let menuArrow = document.getElementById('menu-arrow');
 
 // My lang info
 let langInfo = {
@@ -77,7 +78,10 @@ function addBook(book) {
 }
 
 function bookProccessCallback(data) {
-	// Hide modal
+	// Hide modal and menu
+	if(menuArrow.innerHTML == '↑') {
+		toggleMenu();
+	}
 	loadingBooks.style.display = '';
 
 	if(!data.items) alert('Sin resultados');
@@ -102,6 +106,25 @@ function bookSearchCategory(category) {
 	// Find book category
 	fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${category.id.substr(2, category.length)}&langRestrict=${langActual_page}&maxResults=15`)
 	.then(response => response.json()).then(data => bookProccessCallback(data));
+}
+
+// Toggle mobile menu
+function toggleMenu() {
+	let menuContainer = document.getElementsByClassName('navbar-menu')[0];
+	let menuOptions = document.getElementsByClassName('navbar-menu--option');
+
+	if(menuArrow.innerHTML == '↑') { 		// Hide
+		menuArrow.innerHTML = '↓';
+		menuContainer.className = 'navbar-menu';
+
+		for(let option of menuOptions) option.className = 'navbar-menu--option';
+	}
+	else if(menuArrow.innerHTML == '↓') {	// Show
+		menuArrow.innerHTML = '↑';
+		menuContainer.className = 'navbar-menu navbar-menu--enable';
+
+		for(let option of menuOptions) option.className = 'navbar-menu--option navbar-menu--option-enable';
+	}
 }
 
 // Search book input
@@ -152,12 +175,9 @@ function setPageLanguage(lang) {
 
 window.addEventListener('load', function(event) {
 	// Add event on click
-	document.getElementById('header-language-en').addEventListener('click', () => {
-		setPageLanguage('es');
-	});
-	document.getElementById('header-language-es').addEventListener('click', () => {
-		setPageLanguage('en');
-	});
+	menuArrow.addEventListener('click', () => toggleMenu());
+	document.getElementById('header-language-en').addEventListener('click', () => setPageLanguage('es'));
+	document.getElementById('header-language-es').addEventListener('click', () => setPageLanguage('en'));
 
 	// Update page lang
 	setPageLanguage(localStorage.getItem('language'));

@@ -8,6 +8,7 @@
 
 /*----------  Main container  ----------*/
 .container {
+	overflow: hidden;
 	display: grid;
 	width: 100vw;
 	height: 100vh;
@@ -72,6 +73,10 @@
 	list-style: none;
 }
 
+.navbar-menu--enable {
+	height: fit-content;
+}
+
 .navbar-menu--option {
 	padding: 8px 24px;
 	text-transform: capitalize;
@@ -84,6 +89,18 @@
 .navbar-menu--option:hover {
 	cursor: pointer;
 	background: rgb(172, 95, 95);
+}
+
+.navbar-menu--option-arrow {
+	font-size: 18px;
+	display: none;
+	padding: 10px 0;
+	background: rgb(149, 77, 77);	
+}
+
+/*----------  Menu Arrow (Responsive)  ----------*/
+#menu-arrow { 
+	display: none;
 }
 
 /*----------  Search Input  ----------*/
@@ -203,7 +220,7 @@
 	background: rgb(172, 95, 95);
 }
 
-/*----------  Loading Modal  ----------*/
+/*----------  Modal  ----------*/
 .modal {
 	display: none;
 	position: fixed;
@@ -231,4 +248,73 @@
 	text-transform: uppercase;
 	font-weight: 800;
 	font-family: 'Roboto', sans-serif;
+}
+
+@media (max-width: 768px) {	
+	/*----------  Header  ----------*/
+	.header-top {
+		text-align: center;
+		flex-direction: column;
+	}
+
+	.header-title {
+		margin: 12px 0px 12px 0px;
+	}
+
+	.header-languages {
+		display: none;
+	}
+
+	.header-form {
+		margin-bottom: 10px;
+		justify-content: center;
+	}
+	
+	/*----------  Menu Arrow (Responsive)  ----------*/	
+	#menu-arrow { 
+		display: block;
+	}
+
+	/*----------  Menu categories  ----------*/	
+	.navbar-menu {
+		display: block;
+	}
+		
+	.navbar-menu--enable {
+		height: 100vh;
+	}
+
+	.navbar-menu--option {
+		text-transform: uppercase;
+		display: none;
+		width: 100%;
+		padding: 10px 0px;
+	}
+
+	.navbar-menu--option-arrow {
+		display: block;	
+	}
+
+	.navbar-menu--option-enable {
+		display: block;
+	}
+	
+	/*----------  Search Book  ----------*/	
+	.search-book {
+		width: -webkit-fill-available;
+	}
+
+	.search-form {
+		width: 95%;		
+	}
+
+	/*----------  Book Item  ----------*/
+	.book {
+		margin: 0px 5px 5px 5px;
+	}
+	
+	/*----------  Modal  ----------*/
+	.modal-main {
+		width: 75%;
+	}
 }
